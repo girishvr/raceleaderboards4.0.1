@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link rel="stylesheet" href="https://gitcdn.xyz/cdn/angular/bower-material/v1.1.21/angular-material.css">
+
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
+  <link rel="stylesheet" href="https://material.angularjs.org/1.1.21/docs.css">
+  <!-- Angular Material Dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.4/angular-material.min.js"></script>
+
+  <link rel="stylesheet" href="https://rawgit.com/daniel-nagy/md-data-table/master/dist/md-data-table.css">    <link rel="stylesheet" href="style.css" />
+  <script src="ironmanrankController.js"></script>
+    <title>Yoska Leaderboards</title>
+  </meta>
+</head>
+<body ng-app= 'myapp' ng-controller="leaderboardcontroller as ctrl">
+  <div class="main">
+  <div>
+   <md-card style="background-color: #1F55B2;"> 
+    <md-card-content style="color: white;font-family: Arial, Helvetica, sans-serif;">
+     YOSKA!
+    </md-card-content>
+   </md-card>
+  </div>
+  
+  <div> 
+    <md-content flex layout-padding>
+          <!--
+          <div layout="row">
+            
+        <md-input-container style="width: 25%; align-content: left;">
+           <label>Athlete Name</label>
+            <input type="text" ng-model="message" style="width: 90%;">
+            </md-input-container>
+            <md-input-container style="width: 25%;align-content: right;">
+               <label>Country</label>
+        <md-select ng-model="country" style="width: 90%;">
+          <md-option ng-repeat="contery in contries" ng-value="contery">
+          {{contery}}
+          </md-option>
+        </md-select>
+            </md-input-container>
+            <md-input-container style="width: 25%;align-content: center";>
+               <label>Gender</label>
+        <md-select ng-model="gendercat" style="width: 90%;">
+          <md-option ng-repeat="gender in genders" ng-value="gender">
+          {{gender}}
+          </md-option>
+        </md-select>
+            </md-input-container>
+            <md-input-container style="width: 25%;align-content: right;">
+               <label>Age Group</label>
+        <md-select ng-model="group" style="width: 100%;">
+          <md-option ng-repeat="age in groups" ng-value="age">
+          {{age}}
+          </md-option>
+        </md-select>
+            </md-input-container>
+          -->
+        <div layout="row" layout-margin>
+            
+           <div style="display: inline;width:250%;"> 
+      <md-autocomplete ng-model='ctrl.selectedItem' style="width:200%,padding-right: 200px;"ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" md-escape-options="clear" placeholder="Type in Event Name" input-aria-labelledby="eventLabel">
+        <md-item-template>
+          <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+        </md-item-template>
+        <md-not-found>
+        
+          No such Ironman Event: {{ctrl.searchText}} were found.
+  <!-- Use this in the case of requirement of users reporting some missing events in the future 
+
+          <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+  
+  -->
+        </md-not-found>
+      </md-autocomplete>
+      </div>
+    <!--  
+              <md-input-container style="width: 80%;padding-right: 40px;">
+               <label ng-disabled='!ctrl.selectedItem.value'>Race</label>
+        <md-select ng-disabled='!ctrl.selectedItem.value' ng-model="races" style="width: 100%;">
+          <md-option ng-repeat="race in races" ng-value="race">
+          {{race}}
+          </md-option>
+        </md-select>
+            </md-input-container>
+          -->
+            <md-input-container style="width: 80%;padding-right: 40px;">
+               <label >Year</label>
+        <md-select ng-disabled="!ctrl.selectedItem.value" ng-model="yearely" style="width: 100%;">
+          <md-option ng-repeat="year in years" ng-value="year">
+          {{year}}
+          </md-option>
+        </md-select>
+            </md-input-container>
+          
+        <md-input-container style="width:60%;">
+        
+      <md-button class="md-accent" ng-click="getRes()" ng-disabled="!(ctrl.selectedItem) || !yearely" style="width:100%;">Search</md-button>
+    </md-input-container>       
+          </div>
+          <div layout="row" layout-margin>
+           
+             <md-input-container style="width: 32%;align-content: right;">
+               <label ng-hide='!resultlist'>{{Country=="India"?"Only Indian":"Country"}}</label>
+        <md-select ng-hide='!resultlist'ng-model="Country" style="width: 90%;">
+          <md-option ng-repeat="contery in contries" ng-value="contery">
+          {{contery}}
+          </md-option>
+        </md-select>
+            </md-input-container>
+            <md-input-container style="width: 34%;align-content: center";>
+               <label ng-hide='!resultlist'>Gender</label>
+        <md-select ng-hide='!resultlist' ng-model="gendercat" style="width: 90%;">
+          <md-option ng-repeat="(key,value) in genders" ng-value="key">
+          {{value}}
+          </md-option>
+        </md-select>
+            </md-input-container>
+            <md-input-container style="width: 32%;align-content: right;">
+               <label ng-hide='!resultlist'>Age Group</label>
+        <md-select ng-hide='!resultlist'ng-model="group" style="width: 100%;">
+          <md-option ng-repeat="(key,value) in groups" ng-value="value">
+          {{value}}
+          </md-option>
+        </md-select>
+            </md-input-container>
+          </div>
+            </md-content> 
+          </div>
+
+            <md-card style="background-color:#9e9d99;">
+      <md-card-content style="color: #1F55B2;font-family: Arial, Helvetica, sans-serif;text-align: center;font-size:20px;font-weight: bold">LEADER BOARD
+      </md-card-content>
+    </md-card>
+      
+        <md-card style=" background-color: white;">
+        
+            <md-content flex layout-padding>
+    
+        <md-card style="width:100%;height:500px; background-color:#1F55B2; ">
+        <md-card>
+          <md-content flex layout-padding>
+                  <!--  Write that code of getting ironman results into this spot, since you tend to forget -->
+        <div>
+          <table ng-table ="usersTable" class="table table-striped">
+          <thead>
+                                <tr>
+                                    <th ng-if='resultlist'>Bib Number</th>
+                                    <th ng-if='resultlist'>Athlete Name</th>
+                                    
+                                 <th ng-if='resultlist'>Gender</th> 
+                                    <th ng-if='resultlist'>Country</th>
+                                    <th ng-if='resultlist'>Age Group</th>
+                                    <th ng-if='resultlist'>Overall Position</th>
+                                    <th ng-if='resultlist'>Gender Position</th>
+                                    <th ng-if='resultlist'>Result Time</th>   
+                                    
+                                </tr>
+                            </thead>
+          <tbody>
+        <tr ng-repeat="athlete in resultlist | filter:({age_group:group,country:Country,gender:gendercat}) | orderBy : 'overall_position' " >
+          <td title='Bib Number'>{{athlete.bib_number}}</td>
+          <td title='Athlete Name'>{{athlete.name}}</td>
+          <td title='Gender'>{{athlete.gender}}</td>
+          <td title='Country'>{{athlete.country}}</td>
+          <td title='Age Group'>{{athlete.age_group}}</td>
+          <td title='Overall Position'>{{athlete.overall_position==99999?"DNF":athlete.overall_position}}</td>
+                    <td title='Gender Position'>{{athlete.gender_position==99999?"DNF":athlete.gender_position}}</td>
+          <td title='Result Time'>{{athlete.result_time}}</td>
+          </tr>
+         
+     
+         </tbody>
+     </table>
+       </div>   
+     </md-content>
+        </md-card>
+    </md-card>
+    
+        
+    </md-content>
+    </md-card>
+    
+          <!-- Write the previous table code into this location just like before -->
+  
+</div>
+</body>
+</html>
