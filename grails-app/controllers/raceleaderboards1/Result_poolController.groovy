@@ -4,20 +4,14 @@ import groovy.sql.Sql
 
 class Result_poolController {
     def dataSource;
-
     def index() {
-
         def db=new Sql(dataSource);
         def query="SELECT r.id as id,r.city AS city, r.country AS country, r.state AS state, EXTRACT( YEAR\n" +
                 "FROM r.start_date ) AS year, r.race_name AS race, d.description AS category\n" +
                 "FROM races r, race_category_template d\n" +
                 "WHERE r.race_category_template_id = d.id";
         def races=db.rows(query);
-
-
         renderJSONResponse1(races)
-
-
     }
     def giveresult() {
         def db = new Sql(dataSource);
@@ -35,13 +29,13 @@ class Result_poolController {
               overall_position:it.overall_position,
               category_position:it.category_position,
               gender_position:it.gender_position,
-              swim_time:it.swim_leg_time,
-              cycle_time:it.cycle_leg_time,
-              run_time:it.run_leg_time,
-              t1_time:it.t1_leg_time,
-              t2_time:it.t2_leg_time,
-              start_time:it.start_time,
-              finish_time:it.finish_time,
+              swim_time:it.swim_leg_time.toString(),
+              cycle_time:it.cycle_leg_time.toString(),
+              run_time:it.run_leg_time.toString(),
+              t1_time:it.t1_leg_time.toString(),
+              t2_time:it.t2_leg_time.toString(),
+              start_time:it.start_time.toString(),
+              finish_time:it.finish_time.toString(),
               result_time:it.result_time.toString()
             ]
         }, [formats: ['json']];
