@@ -112,7 +112,7 @@ environments:
             url: jdbc:mysql://localhost/timing_tech
             driverClassName: com.mysql.jdbc.Driver
             username: root
-            password: nrpdrjp
+            password: admin
     test:
         dataSource:
             dbCreate: update
@@ -124,7 +124,7 @@ environments:
             url: jdbc:mysql://localhost/timing_tech
             driverClassName: com.mysql.jdbc.Driver
             username: root
-            password: nrpdrjp
+            password: admin
 
             properties:
                 jmxEnabled: true
