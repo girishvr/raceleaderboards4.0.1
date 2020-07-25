@@ -124,7 +124,7 @@ environments:
             url: jdbc:mysql://localhost/timing_tech
             driverClassName: com.mysql.jdbc.Driver
             username: root
-            password: admin
+            password: nrpdrjp
 
             properties:
                 jmxEnabled: true
