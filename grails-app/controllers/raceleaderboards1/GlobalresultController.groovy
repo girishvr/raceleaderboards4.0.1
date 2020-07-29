@@ -10,26 +10,34 @@ class GlobalresultController {
         if (params.cat == 'Ironman 70.3')
         {
             def db=new Sql(dataSource);
-            def query="SELECT r.id as id,r.city AS city, r.country AS country, r.state AS state, EXTRACT( YEAR\n" +
+          /*  def query="SELECT r.id as id,r.city AS city, r.country AS country, r.state AS state, EXTRACT( YEAR\n" +
                     "FROM r.start_date ) AS year, r.race_name AS race, d.description AS category\n" +
                     "FROM races r, race_category_template d\n" +
                     "WHERE r.race_category_template_id = d.id and r.race_category_template_id=13 and YEAR(r.start_date)="+year+" and r.race_name like '%"+name+"%'";
+            */
+            def query="SELECT r.race_id as id,r.name as name from races_available r where r.category=13 and r.name like '%"+name+"%'";
             def races=db.rows(query);
+
             renderJSONResponse(races)
         }
         if (params.cat == 'Ironman')
         {
             def db=new Sql(dataSource);
-            def query="SELECT r.id as id,r.city AS city, r.country AS country, r.state AS state, EXTRACT( YEAR\n" +
+           /* def query="SELECT r.id as id,r.city AS city, r.country AS country, r.state AS state, EXTRACT( YEAR\n" +
                     "FROM r.start_date ) AS year, r.race_name AS race, d.description AS category\n" +
                     "FROM races r, race_category_template d\n" +
                     "WHERE r.race_category_template_id = d.id and r.race_category_template_id=2 and YEAR(r.start_date)="+year+" and r.race_name like '%"+name+"%'";
+            */
+            def query="SELECT r.race_id as id,r.name as name from races_available r where r.category=2 and r.name like '%"+name+"%'";
             def races=db.rows(query);
+
+
+
             renderJSONResponse(races)
         }
 
     }
-    /* I think this is useless, may need to delete later */
+    /* I think this is useless, may need to delete later
     def raceSearch(){
         def name=params.querySearch;
         def cat=params.cat;
@@ -46,6 +54,8 @@ class GlobalresultController {
 
 
     }
+    */
+
     def getResult()
     {
         def id=params.id;
@@ -80,30 +90,9 @@ class GlobalresultController {
 
         respond races.collect {
             [id                 : it.id,
-             city          : it.city,
-             country : it.country,
-             state :it.state,
-             year:it.year,
-             race:it.race,
-             category:it.category
-             /*
-                  person:it.person.collect{
-                      [
-                              id:it.id,
-                              firstName:it.firstName,
-                              lastName:it.lastName
-                      ]
-                  }*/
+             race:it.name,
             ]
         }, [formats: ['json']];
     }
 
-def renderJSONResponse2(races) {
-
-    respond races.collect {
-        [
-         race:it.race_name
-        ]
-    }, [formats: ['json']];
-}
 }

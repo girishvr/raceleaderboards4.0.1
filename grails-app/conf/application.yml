@@ -109,10 +109,13 @@ environments:
         dataSource:
             pooled: true
             dbCreate: update
-            url: jdbc:mysql://localhost/timing_tech
+            url: jdbc:mysql://localhost/yoska_board
+         #   url: jdbc:mysql://localhost/timing_tech
             driverClassName: com.mysql.jdbc.Driver
             username: root
-            password: admin
+            password: password
+         #   username: root
+        #  password: admin
     test:
         dataSource:
             dbCreate: update
