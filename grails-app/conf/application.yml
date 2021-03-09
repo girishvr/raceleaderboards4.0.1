@@ -109,11 +109,11 @@ environments:
         dataSource:
             pooled: true
             dbCreate: update
-            url: jdbc:mysql://localhost/yoska_board
+            url: jdbc:mysql://localhost/timing_tech
          #   url: jdbc:mysql://localhost/timing_tech
             driverClassName: com.mysql.jdbc.Driver
             username: root
-            password: password
+            password: root
          #   username: root
         #  password: admin
     test:
@@ -148,6 +148,4 @@ environments:
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 
----
-server:
-  port: 8090
+
